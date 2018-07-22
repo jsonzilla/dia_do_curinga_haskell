@@ -130,19 +130,25 @@ monthCard nDays day month = Card {
     value = (toEnum $ cardMonth nDays), suit = (toEnum $ seasons day month) 
     }
 
-buildDeck :: Date -> [Card]
-buildDeck date@(day, month, year) = [dayCard days, weekCard days, monthCard days day month, yearCard days]
-                   where days = fixDay year $ dayOfYear date
+dayShow :: Int -> String
+dayShow days = "Dia " ++ (show $ dayCard days) ++ "\n" 
 
-showDeck :: [Card] -> String
-showDeck card = concat (map show card)
+weekShow :: Int -> String
+weekShow days = "Semana " ++ (show $ weekCard days) ++ "\n" 
+
+monthShow :: Int -> Day -> Month -> String
+monthShow days day month = "Mes " ++ (show $ monthCard days day month) ++ "\n" 
+
+yearShow :: Int -> String
+yearShow days = "Ano " ++ (show $ yearCard days) ++ "\n"
 
 cardString :: Date -> String
-cardString date = showDeck (buildDeck date)
+cardString date@(day, month, year) = dayShow n ++ weekShow n ++ monthShow n day month ++ yearShow n
+    where n = fixDay year $ dayOfYear date
 
 parseDate :: String -> Date
 parseDate input = (l!!0, l!!1, l!!2) -- HIRO fix this
-        where l = map (read::String->Int) $ words input
+    where l = map (read::String->Int) $ words input
                   
 diaDoCuringa :: String -> String
 diaDoCuringa input = cardString $ parseDate input
