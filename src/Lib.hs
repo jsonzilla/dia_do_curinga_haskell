@@ -143,7 +143,7 @@ yearShow :: Int -> String
 yearShow days = "Ano " ++ (show $ yearCard days) ++ "\n"
 
 cardString :: Date -> String
-cardString date@(day, month, year) = dayShow n ++ weekShow n ++ monthShow n day month ++ yearShow n
+cardString date@(day, month, year) = "\n" ++ dayShow n ++ weekShow n ++ monthShow n day month ++ yearShow n
     where n = fixDay year $ dayOfYear date
 
 parseDate :: String -> Date
